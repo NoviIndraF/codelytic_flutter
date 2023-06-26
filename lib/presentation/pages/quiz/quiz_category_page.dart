@@ -1,22 +1,36 @@
 import 'package:codelytic/app.dart';
+import 'package:codelytic/common/app_route.dart';
+import 'package:codelytic/common/constant.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/theme.dart';
 import 'package:codelytic/presentation/widgets/item_materi_widget.dart';
+import 'package:codelytic/presentation/widgets/item_quiz_category_widget.dart';
+import 'package:codelytic/presentation/widgets/item_task_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MateriPage extends StatelessWidget {
-  const MateriPage({Key? key}) : super(key: key);
+class QuizCategoryPage extends StatelessWidget {
+  const QuizCategoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
 
-      body: Stack(children: [
-        Container(
-          height: Dimens.heighMax(context),
-          color: primaryColor,
+      body: Stack(
+          children: [
+        Column(
+          children: [
+            Container(
+              height: Dimens.heighMax(context)*0.3,
+              color: accentColor3,
+            ),
+            Expanded(
+              child: Container(
+                color: bgColor1,
+              ),
+            ),
+          ],
         ),
         SingleChildScrollView(
           child: Column(
@@ -24,7 +38,7 @@ class MateriPage extends StatelessWidget {
               Container(
                   height: 80,
                   width: Dimens.widthMax(context),
-                  color: primaryColor,
+                  color: accentColor3,
                   child:
                   Row(
                     children: [
@@ -39,9 +53,23 @@ class MateriPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                          "Materi",
+                          "Kuis Kategori",
                         style: secondaryTextStyle.copyWith(
                           fontSize: 20
+                        ),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoute.quizAllHistory);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Icon(
+                            Icons.history,
+                            color: secondaryColor,
+                            size: 32,
+                          ),
                         ),
                       ),
                     ],
@@ -73,13 +101,13 @@ class MateriPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(
                               Radius.circular(Dimens.clipRounded),
                             ),
-                            color: primaryColor,
+                            color: accentColor3,
                           ),
                         ),
                       ),
                       SizedBox(height: 28,),
                       Text(
-                          "List Materi",
+                          "List Kategori Kuis",
                         style: subtitleTextStyle,
                       ),
                       content(context),
@@ -98,11 +126,10 @@ class MateriPage extends StatelessWidget {
   Column content (BuildContext context){
     return Column(
         children : [
-          ItemMateriWidget(),
-          ItemMateriWidget(),
-          ItemMateriWidget(),
-          ItemMateriWidget(),
-          ItemMateriWidget(),
+          ItemQuizCategoryWidget('Mudah', 1, 'Kuis dengan pertanyaan paling mudah'),
+          ItemQuizCategoryWidget('Normal', 2, 'Kuis dengan pertanyaan kesulitan normal'),
+          ItemQuizCategoryWidget('Sulit', 3, 'Kuis dengan pertanyaan kesulitan tinggi'),
+          ItemQuizCategoryWidget('Expert', 4, 'Kuis dengan pertanyaan kesulitan sangat tinggi'),
         ]
     );
   }

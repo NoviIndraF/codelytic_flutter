@@ -6,7 +6,8 @@ class FormValidator{
   static final passwordValidate = ValidationBuilder().minLength(8, TextApp.tfInvalidFormatPassword).build();
   static final fullnameValidate = ValidationBuilder().minLength(1, TextApp.tfInvalidFormatEmail).build();
   static final usernameValidate = ValidationBuilder().username().build();
-
+  static final taskSubmitValidate = ValidationBuilder().minLength(1, TextApp.tfInvalidFormatTaskSubmit).build();
+  static final taskAnswerValidate = ValidationBuilder().minLength(1, TextApp.tfInvalidFormatAnswerSubmit).build();
   static confirmPasswordValidate(cPassword, password){
     if (cPassword.isEmpty){
       return 'The is field required';

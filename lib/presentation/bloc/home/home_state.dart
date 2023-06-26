@@ -18,13 +18,13 @@ class HomeErrorState extends HomeState{
 class HomeGetTokenAndCodeState extends HomeState{
   final String token;
   final String code;
+  final String roomId;
 
-  HomeGetTokenAndCodeState({required this.token, required this.code});
+  HomeGetTokenAndCodeState({required this.token, required this.code, required this.roomId});
 
   @override
   List<Object?> get props => [token,code];
 }
-
 
 class HomeGetStudentState extends HomeState{
   final StudentEntity token;
@@ -32,13 +32,4 @@ class HomeGetStudentState extends HomeState{
 
   @override
   List<Object?> get props => [token];
-}
-
-class HomeGetAllDataByRoomCodeState extends HomeState{
-  final StudentEntity studentEntity;
-  final GetAllDataByRoomCodeEntity getAllDataByRoomCodeEntity;
-  HomeGetAllDataByRoomCodeState(this.studentEntity,this.getAllDataByRoomCodeEntity);
-
-  @override
-  List<Object?> get props => [getAllDataByRoomCodeEntity];
 }

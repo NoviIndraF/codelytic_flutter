@@ -7,6 +7,7 @@ Color secondaryColor = const Color(0xFFF4F8FB);
 Color accentColor = const Color(0xFFFF8181);
 Color accentColor2 = const Color(0xFF7DC579);
 Color accentColor3 = const Color(0xFFFFC960);
+Color disableColor = const Color(0xff91919F);
 
 Color alertColor = const Color(0xffED6363);
 Color priceColor = const Color(0xff2C96F1);
@@ -47,6 +48,13 @@ TextStyle thirdTextStyle =
         color: greyTextColor,
         fontSize: 14,
     );
+
+TextStyle headerTextStyle =
+TextStyle(
+    fontFamily: 'Poppins',
+    color: secondaryColor,
+    fontSize: 24,
+);
 
 TextStyle subtitleTextStyle =
     TextStyle(

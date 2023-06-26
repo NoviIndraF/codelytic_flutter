@@ -25,11 +25,16 @@ class RegisterClassPage extends StatelessWidget {
           token = state.result;
         }
         if (state is AuthRegisteredRoom){
-          final codeClass = state.result;
-          Navigator.popAndPushNamed(context, AppRoute.main, arguments: {
-            'token' : token,
-            'codeClass' : codeClass,
-          });
+
+          context.read<AuthBloc>().add(AuthSaveRoomIdEvent(state.result.room_id.toString()??""));
+          context.read<AuthBloc>().add(AuthCheckFirstEvent());
+        }
+        if(state is AuthHasFirstState){
+          if(state.result == "1"){
+            Navigator.popAndPushNamed(context, AppRoute.main);
+          } else{
+            Navigator.popAndPushNamed(context, AppRoute.intro);
+          }
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(

@@ -112,6 +112,7 @@ class QuizEntity extends Equatable{
     this.slug,
     this.title,
     this.description,
+    this.level,
     this.status,
     this.createdAt,
     this.updatedAt,
@@ -120,6 +121,7 @@ class QuizEntity extends Equatable{
   String? slug;
   String? title;
   String? description;
+  int? level;
   String? status;
   String? createdAt;
   String? updatedAt;
@@ -128,6 +130,7 @@ class QuizEntity extends Equatable{
     id = json['id'] ?? "";
     slug = json['slug'] ?? "";
     title = json['title'];
+    level = json['level'];
     description = json['description'] ?? "";
     status = json['status'] ?? "";
     createdAt = json['created_at'] ?? "";

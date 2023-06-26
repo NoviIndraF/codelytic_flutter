@@ -3,20 +3,20 @@ import 'package:flutter/cupertino.dart';
 
 class AuthRegisterRoomResponseEntity extends Equatable{
   AuthRegisterRoomResponseEntity({
-    this.code,
+    this.room_id,
   });
-  String? code;
+  int? room_id;
 
   AuthRegisterRoomResponseEntity.fromJson(Map<String, dynamic> json){
-    code = json['code'];
+    room_id = json['room_id'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['code'] = code;
+    _data['room_id'] = room_id;
     return _data;
   }
 
   @override
-  List<Object?> get props => [code];
+  List<Object?> get props => [room_id];
 }

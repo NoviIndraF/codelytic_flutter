@@ -6,6 +6,7 @@ import 'package:codelytic/data/model/request/authentication/login_request.dart';
 import 'package:codelytic/data/model/request/authentication/register_room_request.dart';
 import 'package:codelytic/data/model/request/authentication/register_request.dart';
 import 'package:codelytic/data/model/request/home/get_materi_by_room_code_request.dart';
+import 'package:codelytic/data/model/request/materi/get_materi_by_room_id_request.dart';
 import 'package:codelytic/data/model/response/authentication/auth_register_room_response.dart';
 import 'package:codelytic/data/model/response/authentication/auth_response.dart';
 import 'package:codelytic/data/model/response/authentication/get_student_room_response.dart';
@@ -13,6 +14,7 @@ import 'package:codelytic/data/model/response/authentication/authentication.dart
 import 'package:codelytic/data/datasource/network/remote_data_source.dart';
 import 'package:codelytic/data/model/response/authentication/get_room_by_code_response.dart';
 import 'package:codelytic/data/model/response/home/get_all_data_by_room_code_response.dart';
+import 'package:codelytic/data/model/response/materi/get_materi_by_room_id_response.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,11 +28,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
     dio = Dio();
 
-    final request = await dio.post(
-      'http://10.0.2.2:8000/api/login',
-      data: register.toMap(),
+    final request = await http.post(
+      Uri.parse('${Constant.baseUrl}login'),
+      body: register.toMap(),
     );
-    final response = jsonDecode(request.data);
+    final response = jsonDecode(request.body);
 
     if (response['meta']['code'] == 200) {
       return Authentication.fromJson(response['data']);
@@ -131,28 +133,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         return AuthRegisterRoomResponse();
       }
       return AuthRegisterRoomResponse.fromJson(response['data']);
-    } else {
-      throw Exception(response['message']);
-    }
-  }
-
-  @override
-  Future<GetAllDataByRoomCodeResponse> getAllDataByRoomCode(String token, GetAllDataByRoomCodeRequest getAllDataByRoomCodeRequest) async {
-    final request = await http.post(
-      Uri.parse('${Constant.baseUrl}getAllDataByRoomCode'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': '$token',
-      },
-      body: jsonEncode(getAllDataByRoomCodeRequest.toMap()),
-    );
-
-    final response = jsonDecode(request.body);
-    if (response['meta']['code'] == 200) {
-      if(response['data'] == null){
-        return GetAllDataByRoomCodeResponse();
-      }
-      return GetAllDataByRoomCodeResponse.fromJson(response['data']);
     } else {
       throw Exception(response['message']);
     }

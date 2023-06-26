@@ -1,4 +1,5 @@
 import 'package:codelytic/common/app_route.dart';
+import 'package:codelytic/common/constant.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/text_app.dart';
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
@@ -6,6 +7,9 @@ import 'package:codelytic/presentation/widgets/show_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:codelytic/common/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'home_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -15,6 +19,9 @@ class ProfilePage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if(state is AuthLogout){
+          Constant.setToken("");
+          Constant.setCode("");
+          Constant.setRoomId(0);
           Navigator.popAndPushNamed(context, AppRoute.login);
         }
       },
@@ -46,13 +53,13 @@ class ProfilePage extends StatelessWidget {
                               children: [
                                 SizedBox(height: 16,),
                                 Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: AssetImage('assets/images/img-profile.png')),
+                                  height: 80,
+                                  width: 80,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/ic-student.svg',
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 16,),

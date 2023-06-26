@@ -1,4 +1,4 @@
-import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_entity.dart';
+import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_response_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class GetAllDataByRoomCodeResponse extends Equatable{
@@ -118,6 +118,7 @@ class Quiz extends Equatable{
     this.slug,
     this.title,
     this.description,
+    this.level,
     this.status,
     this.createdAt,
     this.updatedAt,
@@ -125,6 +126,7 @@ class Quiz extends Equatable{
   int? id;
   String? slug;
   String? title;
+  int? level;
   String? description;
   String? status;
   String? createdAt;
@@ -134,6 +136,7 @@ class Quiz extends Equatable{
     id = json['id'] ?? "";
     slug = json['slug'] ?? "";
     title = json['title'];
+    level = json['level'] ?? "";
     description = json['description'] ?? "";
     status = json['status'] ?? "";
     createdAt = json['created_at'] ?? "";

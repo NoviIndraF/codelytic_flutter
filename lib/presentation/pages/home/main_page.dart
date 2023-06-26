@@ -1,7 +1,10 @@
+import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/theme.dart';
+import 'package:codelytic/presentation/bloc/home/home_bloc.dart';
 import 'package:codelytic/presentation/pages/home/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,6 +17,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
 
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(HomeGetTokenAndCodeEvent());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +37,7 @@ class _MainPageState extends State<MainPage> {
   FloatingActionButton cartButton() {
     return FloatingActionButton(
       onPressed: () {
-        // Navigator.pushNamed(context, '/cart');
+         Navigator.pushNamed(context, AppRoute.intro);
       },
       backgroundColor: secondaryColor,
       child: Image.asset(

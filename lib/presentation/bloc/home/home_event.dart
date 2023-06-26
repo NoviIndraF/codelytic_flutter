@@ -11,11 +11,3 @@ class HomeGetStudentEvent extends HomeEvent{
   @override
   List<Object?> get props => [token];
 }
-class HomeGetAllDataByRoomCodeEvent extends HomeEvent{
-  final String token;
-  final GetAllDataByRoomCodeRequest getAllDataByRoomCodeRequest;
-  HomeGetAllDataByRoomCodeEvent(this.token, this.getAllDataByRoomCodeRequest);
-
-  @override
-  List<Object?> get props => [token, getAllDataByRoomCodeRequest];
-}

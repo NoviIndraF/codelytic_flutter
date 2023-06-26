@@ -10,7 +10,7 @@ import 'package:codelytic/domain/entities/authentication/auth_register_room_resp
 import 'package:codelytic/domain/entities/authentication/get_student_room_response_entity.dart';
 import 'package:codelytic/domain/entities/authentication/authentication_entity.dart';
 import 'package:codelytic/domain/entities/authentication/get_room_by_code_response_entity.dart';
-import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_entity.dart';
+import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_response_entity.dart';
 import 'package:codelytic/domain/repositories/auth_repositories.dart';
 import 'package:dartz/dartz.dart';
 
@@ -151,17 +151,6 @@ class AuthRepositoriesImpl implements AuthRepositories {
   Future<Either<String, AuthRegisterRoomResponseEntity>> createStudentRoom(String token, RegisterRoomRequest registerRoomRequest) async {
     try {
       final result = await remoteDataSourceImpl.createStudentRoom(token, registerRoomRequest);
-      return Right(result.toEntity());
-    }
-    catch (e) {
-      return Left(e.toString());
-    }
-  }
-
-  @override
-  Future<Either<String, GetAllDataByRoomCodeEntity>> getAllDataByRoomCode(String token, GetAllDataByRoomCodeRequest getAllDataByRoomCodeRequest) async {
-    try {
-      final result = await remoteDataSourceImpl.getAllDataByRoomCode(token, getAllDataByRoomCodeRequest);
       return Right(result.toEntity());
     }
     catch (e) {

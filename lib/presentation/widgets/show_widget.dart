@@ -140,7 +140,7 @@ class ShowWidget {
                               ),
                               Text(
                                 message,
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 14),
                               ),
                               SizedBox(
                                 height: 20,

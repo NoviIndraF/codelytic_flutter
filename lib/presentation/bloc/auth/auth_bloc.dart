@@ -50,6 +50,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           });
     });
 
+    on<AuthCheckFirstEvent>((event, emit) async {
+      emit(AuthLoading());
+      print("AuthCheckFirstEvent:");
+      final hasClass = await authUseCase.getToSharedPref("first");
+      hasClass.fold(
+              (failure) => emit(AuthError(failure.toString())),
+              (data) {
+            if (data != "") {
+              emit(AuthHasFirstState(data));
+            } else {
+              emit(AuthHasFirstState(data));
+            }
+          });
+    });
+
     on<AuthLoginEvent>((event, emit) async {
       emit(AuthLoading());
       print("pulu login bloc");
@@ -103,6 +118,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
       await authUseCase.unsetToken();
       await authUseCase.deteleToSharedPref(Constant.codeRoom);
+      await authUseCase.deteleToSharedPref(Constant.roomId);
     });
 
     on<AuthGetRoomEvent>((event, emit) async {
@@ -180,13 +196,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               (failure) => emit(AuthError(failure.toString())),
               (data) {
             if (data != "") {
-              emit(AuthSavedCodeRoom(data));
+              emit(AuthSavedCodeRoomState(data));
             } else {
               emit(AuthFailed(data.toString()));
             }
           });
     });
 
+    on<AuthSaveFirstEvent>((event, emit) async {
+      emit(AuthLoading());
+      print("pulu login bloc");
+      final hasClass = await authUseCase.saveToSharedpref("first", event.first);
+      hasClass.fold(
+              (failure) => emit(AuthError(failure.toString())),
+              (data) {
+            if (data != "") {
+              emit(AuthSavedFirstState(data));
+            } else {
+              emit(AuthFailed(data.toString()));
+            }
+          });
+    });
+
+    on<AuthSaveRoomIdEvent>((event, emit) async {
+      emit(AuthLoading());
+      print("pulu login bloc");
+      final hasClass = await authUseCase.saveToSharedpref(Constant.roomId, event.roomId);
+      hasClass.fold(
+              (failure) => emit(AuthError(failure.toString())),
+              (data) {
+            if (data != "") {
+              emit(AuthSavedRoomIdState(data));
+            } else {
+              emit(AuthFailed(data.toString()));
+            }
+          });
+    });
 
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/text_app.dart';
@@ -6,6 +5,8 @@ import 'package:codelytic/common/theme.dart';
 import 'package:codelytic/data/model/request/authentication/get_room_by_code_request.dart';
 import 'package:codelytic/data/model/response/authentication/get_student_room_response.dart';
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
+import 'package:codelytic/presentation/bloc/home/home_bloc.dart';
+import 'package:codelytic/presentation/widgets/item_class_widget.dart';
 import 'package:codelytic/presentation/widgets/show_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,21 @@ class LoginClassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final arguments = ModalRoute.of(context)?.settings.arguments;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthSavedCodeRoom) {
-          Navigator.popAndPushNamed(context, AppRoute.main);
+        if (state is AuthSavedCodeRoomState) {
+          context.read<AuthBloc>().add(AuthCheckFirstEvent());
+        }
+        if(state is AuthHasFirstState){
+          if(state.result == "1"){
+            Navigator.popAndPushNamed(context, AppRoute.main);
+          } else{
+            Navigator.popAndPushNamed(context, AppRoute.intro);
+          }
+        }
+        if (state is AuthHasToken) {
+          token = state.result;
+          context.read<AuthBloc>().add(AuthGetRoomEvent(state.result));
         }
         if (state is AuthFailed) {
           ShowWidget.dialog(context, state.message);
@@ -32,181 +42,103 @@ class LoginClassPage extends StatelessWidget {
       },
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          if (state is AuthHasToken) {
-            token = state.result;
-            context.read<AuthBloc>().add(AuthGetRoomEvent(state.result));
-          }
+
           return SafeArea(
               child: Scaffold(
-                body: Container(
-                  padding: EdgeInsets.only(
-                      top:Dimens.defaultMargin,
-                      bottom: Dimens.heighBottomKeyboard(context),
-                    right: Dimens.defaultMargin,
-                    left: Dimens.defaultMargin,
-                  ),
-                  color: bgColor2,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Silahkan pilih kelas Anda terlebih dulu...",
-                          style: subtitleTextStyle.copyWith(
-                            fontSize: 20,
-                            color: secondaryColor,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: Dimens.widthMax(context),
-                          padding: EdgeInsets.all(Dimens.defaultMargin),
-                          decoration: BoxDecoration(
-                              color: bgColor1,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimens.clipRounded))),
-                          child: (state is AuthLoading)
-                              ? Center(child: CircularProgressIndicator())
-                              : (state is AuthGetRoom)
-                              ? Column(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                       bottom: 20),
-                                  child: Container(
-                                    height: 8,
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width /
-                                        2,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            Dimens.clipRounded),
-                                      ),
-                                      color: primaryColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  height:
-                                  Dimens.heighMax(context) / 3,
-                                  child: ListView.builder(
-                                      itemCount:
-                                      state.result.data.length,
-                                      itemBuilder: (context, index) {
-                                        return itemClassWidget(
-                                            context,
-                                            state.result.data[index]);
-                                      })),
-                            ],
-                          )
-                              : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Silahkan input kode kelas anda..."),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          "Sudah punya code kelas lain?",
-                          style: subtitleTextStyle.copyWith(
-                            fontSize: 14,
-                            color: secondaryColor,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                        btnRegisterClassButton(context)
-                      ],
+            body: Container(
+              padding: EdgeInsets.only(
+                top: Dimens.defaultMargin,
+                bottom: Dimens.heighBottomKeyboard(context),
+                right: Dimens.defaultMargin,
+                left: Dimens.defaultMargin,
+              ),
+              color: bgColor2,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Silahkan pilih kelas Anda terlebih dulu...",
+                      style: subtitleTextStyle.copyWith(
+                        fontSize: 20,
+                        color: secondaryColor,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: Dimens.widthMax(context),
+                      padding: EdgeInsets.all(Dimens.defaultMargin),
+                      decoration: BoxDecoration(
+                          color: bgColor1,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Dimens.clipRounded))),
+                      child: (state is AuthLoading)
+                          ? Center(child: CircularProgressIndicator())
+                          : (state is AuthGetRoom)
+                              ? Column(
+                                  children: [
+                                    Center(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 20),
+                                        child: Container(
+                                          height: 8,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  Dimens.clipRounded),
+                                            ),
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                        height: Dimens.heighMax(context) / 3,
+                                        child: ListView.builder(
+                                            itemCount: state.result.data.length,
+                                            itemBuilder: (context, index) {
+                                              return ItemClassWidget(context,
+                                                  state.result.data[index]);
+                                            })),
+                                  ],
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Silahkan input kode kelas anda..."),
+                                  ],
+                                ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Sudah punya code kelas lain?",
+                      style: subtitleTextStyle.copyWith(
+                        fontSize: 14,
+                        color: secondaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    btnRegisterClassButton(context)
+                  ],
                 ),
-              ));
+              ),
+            ),
+          ));
         },
       ),
     );
   }
 
-  StatelessWidget itemClassWidget(BuildContext context,
-      Data data) {
-    return GestureDetector(
-      onTap: () {
-        context.read<AuthBloc>().add(AuthSaveCodeRoomEvent(data.code??""));
-      },
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.all(Dimens.defaultMargin),
-              decoration: BoxDecoration(
-                borderRadius:
-                BorderRadius.all(Radius.circular(Dimens.clipRounded)),
-                color: bgColor3,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(Dimens.defaultMargin),
-                    decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(Dimens.clipRounded)),
-                      color: accentColor2,
-                    ),
-                    child: Icon(
-                      Icons.class_,
-                      color: secondaryColor,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(Dimens.defaultMargin),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.room.name??"",
-                          style: blackTextStyle.copyWith(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          data.room.major??"",
-                          style: blackTextStyle.copyWith(
-                              fontSize: 10, color: primaryColor),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          data.room.user.name??"",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   StatelessWidget btnRegisterClassButton(BuildContext context) {
     return Container(

@@ -58,6 +58,15 @@ class AuthHasCodeRoom extends AuthState{
   List<Object?> get props => [result];
 }
 
+class AuthHasFirstState extends AuthState{
+  final String result;
+
+  AuthHasFirstState(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
@@ -116,10 +125,28 @@ class AuthRegisterFailed extends AuthState {
   List<Object?> get props => [message];
 }
 
-class AuthSavedCodeRoom extends AuthState{
+class AuthSavedCodeRoomState extends AuthState{
   final String result;
 
-  AuthSavedCodeRoom(this.result);
+  AuthSavedCodeRoomState(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
+class AuthSavedFirstState extends AuthState{
+  final String result;
+
+  AuthSavedFirstState(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
+class AuthSavedRoomIdState extends AuthState{
+  final String result;
+
+  AuthSavedRoomIdState(this.result);
 
   @override
   List<Object?> get props => [result];

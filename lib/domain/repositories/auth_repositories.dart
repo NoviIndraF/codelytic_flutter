@@ -8,7 +8,7 @@ import 'package:codelytic/domain/entities/authentication/auth_register_room_resp
 import 'package:codelytic/domain/entities/authentication/get_student_room_response_entity.dart';
 import 'package:codelytic/domain/entities/authentication/authentication_entity.dart';
 import 'package:codelytic/domain/entities/authentication/get_room_by_code_response_entity.dart';
-import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_entity.dart';
+import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_response_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepositories{
@@ -17,7 +17,6 @@ abstract class AuthRepositories{
 
   Future<Either<String, GetStudentRoomResponseEntity>> getStudentRoom(String token);
   Future<Either<String, GetRoomByCodeResponseEntity>> getRoomByCode(String token, GetRoomByCodeRequest code);
-  Future<Either<String, GetAllDataByRoomCodeEntity>> getAllDataByRoomCode(String token, GetAllDataByRoomCodeRequest getAllDataByRoomCodeRequest);
 
   Future<Either<String, AuthenticationEntity>> login(LoginRequest loginRequest);
   Future<Either<String, AuthResponse>> logout(String token);

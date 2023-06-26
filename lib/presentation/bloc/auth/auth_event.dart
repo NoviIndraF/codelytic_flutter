@@ -31,6 +31,7 @@ class AuthLoginEvent extends AuthEvent{
 class AuthCheckEvent extends AuthEvent{}
 
 class AuthCheckCodeRoomEvent extends AuthEvent{}
+class AuthCheckFirstEvent extends AuthEvent{}
 
 class AuthGetRoomEvent extends AuthEvent{
   final String token;
@@ -55,6 +56,22 @@ class AuthSaveCodeRoomEvent extends AuthEvent{
 
   @override
   List<Object?> get props => [code];
+}
+
+class AuthSaveFirstEvent extends AuthEvent{
+  final String first;
+  AuthSaveFirstEvent(this.first);
+
+  @override
+  List<Object?> get props => [first];
+}
+
+class AuthSaveRoomIdEvent extends AuthEvent{
+  final String roomId;
+  AuthSaveRoomIdEvent(this.roomId);
+
+  @override
+  List<Object?> get props => [roomId];
 }
 
 class AuthLogoutEvent extends AuthEvent{}

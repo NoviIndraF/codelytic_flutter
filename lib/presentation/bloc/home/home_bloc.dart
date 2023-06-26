@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:codelytic/common/constant.dart';
 import 'package:codelytic/data/model/request/home/get_materi_by_room_code_request.dart';
 import 'package:codelytic/domain/entities/authentication/authentication_entity.dart';
-import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_entity.dart';
+import 'package:codelytic/domain/entities/home/get_all_data_by_room_code_response_entity.dart';
 import 'package:codelytic/domain/usecase/home/home_usecase.dart';
 import 'package:meta/meta.dart';
 
@@ -22,6 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       print("HomeGetCodeEvent :");
       String code = "";
       String token = "";
+      String roomId = "";
 
       final getcode = await homeUseCase.getToSharedPref(Constant.codeRoom);
 
@@ -43,8 +44,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       });
 
-      if (code != "" && token != ""){
-        emit(HomeGetTokenAndCodeState(token: token, code: code));
+      final getRoomId = await homeUseCase.getToSharedPref(Constant.roomId);
+
+      getRoomId.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
+        if (data != "") {
+          roomId = data;
+        } else {
+          emit(HomeErrorState(data.toString()));
+        }
+      });
+
+        if (code != "" || token != "" || roomId != "" ){
+        emit(HomeGetTokenAndCodeState(token: token, code: code, roomId: roomId));
       }
     });
 
@@ -62,37 +73,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       });
     });
-
-    on<HomeGetAllDataByRoomCodeEvent>((event, emit) async {
-      emit(HomeLoading());
-      print("HomeGetAllDataByRoomCodeEvent :");
-
-      StudentEntity studentEntity= StudentEntity();
-      GetAllDataByRoomCodeEntity getAllDataByRoomCodeEntity = GetAllDataByRoomCodeEntity();
-
-      final getStudent = await homeUseCase.getStudent(event.token);
-      getStudent.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
-        if (data != "") {
-          studentEntity = data;
-        } else {
-          emit(HomeErrorState(data.toString()));
-        }
-      });
-
-      final getAllDAta = await homeUseCase.getAllDataByRoomCode(event.token, event.getAllDataByRoomCodeRequest);
-      getAllDAta.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
-        if (data != "") {
-          getAllDataByRoomCodeEntity = data;
-        } else {
-          emit(HomeErrorState(data.toString()));
-        }
-      });
-
-      if(studentEntity.id != null && getAllDataByRoomCodeEntity.id !=null){
-        emit(HomeGetAllDataByRoomCodeState(studentEntity,getAllDataByRoomCodeEntity));
-      }
-
-    });
-
   }
 }

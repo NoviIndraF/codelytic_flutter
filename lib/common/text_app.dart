@@ -10,6 +10,7 @@ class TextApp{
   static const String tfEmail                 = "Email";
   static const String tfHintEmail             = "Email...";
   static const String tfInvalidFormatEmail    = "Format email tidak sesuai 😟";
+  static const String tfInvalidFormatTaskSubmit = "Tugas tidak boleh kosong";
 
   static const String tfPassword                  = "Password";
   static const String tfHintPassword              = "Password...";
@@ -31,10 +32,18 @@ class TextApp{
   static const String tfCodeClass                 = "Kode Kelas";
   static const String tfHintCodeClass               = "Masukkan Kode Kelas...";
 
+  static const String tfTask                    = "Tugas";
+  static const String tfHintTask               = "Input Tugas Anda...";
+
+  static const String tfAnswer                   = "Jawaban";
+  static const String tfHintAnswer               = "Jawaban Anda...";
+  static const String tfInvalidFormatAnswerSubmit = "Jawaban tidak boleh kosong";
 
   // Button
   static const String btnLogin    = "Masuk";
   static const String btnRegister = "Daftar";
+  static const String btnStart = "Mulai";
+  static const String btnClose = "Tutup";
   static const String btnCheckReedemCodeClass = "Periksa Kelas";
 
 
@@ -47,8 +56,35 @@ class TextApp{
   static const String headerRegister = "Silahkan masukan data anda...";
   static const String footerRegister    = "Sudah punya akun?";
 
+  // Home Page
+  static const String welcome = "Halo Selamat Datang,";
+
+  static const String materi = "Materi";
+  static const String task = "Tugas";
+  static const String quiz = "Kuis";
+  static const String disscussion = "Diskusi";
+
+  static const String nothingMateri = "Tidak ada materi";
+  static const String nothingTask = "Tidak ada tugas";
+  static const String nothingQuiz = "Tidak ada kuis";
+  static const String nothingDiscussion = "Tidak ada diskusi";
+
+  // Task Page
+
+  static const String confirmSubmitTask    = "Apakah anda sudah yakin ingin mengirim tugas ini?";
+  static const String taskHasSubmitted = "Anda sudah mengirim tugas ini sebelumnya, apakah anda ingin mengirim tugas ini lagi?";
+
+  //  History
+  static const String titleTaskHistory = "Histori Pengumpulan Tugas";
+  static const String titleQuizHistory = "Histori Kuis";
+  static const String subTitleTaskHistory = "List Pengumpulan Tugas";
+  static const String subTitleQuizHistory = "List Score Kuis";
+
   // ProfilMenuPage
   static const String logOut            = "Keluar";
   static const String confirmLogOut     = "Apakah yakin ingin keluar dari aplikasi? 😟 ";
+
+  // Error
+  static const String somethingWrong = "Terjadi Kesalahan";
 
 }

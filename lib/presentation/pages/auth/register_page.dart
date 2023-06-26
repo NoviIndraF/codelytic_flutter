@@ -1,6 +1,7 @@
 
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/form_validator.dart';
+import 'package:codelytic/common/helper.dart';
 import 'package:codelytic/common/text_app.dart';
 import 'package:codelytic/data/model/request/authentication/register_request.dart';
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
@@ -356,8 +357,7 @@ class RegisterPage extends StatelessWidget {
       margin: const EdgeInsets.only(top: 30),
       child: TextButton(
           onPressed: () {
-            if(_validate(_formRegister)){
-
+            if(Helper.validate(_formRegister)){
               RegisterRequest request =
               RegisterRequest(
                   name: nameController.text,
@@ -411,12 +411,5 @@ class RegisterPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  bool _validate(GlobalKey<FormState> _formRegister) {
-    if (_formRegister.currentState!.validate()){
-      return true;
-    }
-    return false;
   }
 }
