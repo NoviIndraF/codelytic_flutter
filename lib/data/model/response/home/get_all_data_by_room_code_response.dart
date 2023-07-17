@@ -92,7 +92,7 @@ class Materi extends Equatable{
   String? slug;
   String? title;
   String? description;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
@@ -128,7 +128,7 @@ class Quiz extends Equatable{
   String? title;
   int? level;
   String? description;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
@@ -168,7 +168,7 @@ class Task extends Equatable{
   String? note;
   String? content;
   String? deadline;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 

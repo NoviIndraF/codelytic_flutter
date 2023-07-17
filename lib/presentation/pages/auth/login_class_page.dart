@@ -2,6 +2,7 @@ import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/text_app.dart';
 import 'package:codelytic/common/theme.dart';
+import 'package:codelytic/data/model/argument/route_argument.dart';
 import 'package:codelytic/data/model/request/authentication/get_room_by_code_request.dart';
 import 'package:codelytic/data/model/response/authentication/get_student_room_response.dart';
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
@@ -29,7 +30,7 @@ class LoginClassPage extends StatelessWidget {
           if(state.result == "1"){
             Navigator.popAndPushNamed(context, AppRoute.main);
           } else{
-            Navigator.popAndPushNamed(context, AppRoute.intro);
+            Navigator.popAndPushNamed(context, AppRoute.intro, arguments: RouteArgument(route: AppRoute.main));
           }
         }
         if (state is AuthHasToken) {
@@ -41,8 +42,10 @@ class LoginClassPage extends StatelessWidget {
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
+        buildWhen: (prevState, state){
+          return state is AuthGetRoom;
+        },
         builder: (context, state) {
-
           return SafeArea(
               child: Scaffold(
             body: Container(

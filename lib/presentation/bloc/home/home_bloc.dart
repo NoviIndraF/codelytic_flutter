@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:codelytic/common/constant.dart';
 import 'package:codelytic/data/model/request/home/get_materi_by_room_code_request.dart';
@@ -14,19 +12,19 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeUsecase homeUseCase;
 
-
   HomeBloc(this.homeUseCase) : super(HomeInitial()) {
-
     on<HomeGetTokenAndCodeEvent>((event, emit) async {
       emit(HomeLoading());
       print("HomeGetCodeEvent :");
       String code = "";
       String token = "";
       String roomId = "";
+      String userId = "";
 
       final getcode = await homeUseCase.getToSharedPref(Constant.codeRoom);
 
-      getcode.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
+      getcode.fold((failure) => emit(HomeErrorState(failure.toString())),
+          (data) {
         if (data != "") {
           code = data;
         } else {
@@ -36,7 +34,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       final getToken = await homeUseCase.getToSharedPref(Constant.token);
 
-      getToken.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
+      getToken.fold((failure) => emit(HomeErrorState(failure.toString())),
+          (data) {
         if (data != "") {
           token = data;
         } else {
@@ -45,8 +44,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       });
 
       final getRoomId = await homeUseCase.getToSharedPref(Constant.roomId);
-
-      getRoomId.fold((failure) => emit(HomeErrorState(failure.toString())), (data) {
+      getRoomId.fold((failure) => emit(HomeErrorState(failure.toString())),
+          (data) {
         if (data != "") {
           roomId = data;
         } else {
@@ -54,8 +53,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       });
 
-        if (code != "" || token != "" || roomId != "" ){
-        emit(HomeGetTokenAndCodeState(token: token, code: code, roomId: roomId));
+      final getUserId = await homeUseCase.getToSharedPref(Constant.userId);
+      getUserId.fold((failure) => emit(HomeErrorState(failure.toString())),
+          (data) {
+        if (data != "") {
+          userId = data;
+        } else {
+          emit(HomeErrorState(data.toString()));
+        }
+      });
+
+      if (code != "" || token != "" || roomId != "" || userId != "") {
+        emit(
+            HomeGetTokenAndCodeState(token: token, code: code, roomId: roomId, userId: userId));
       }
     });
 

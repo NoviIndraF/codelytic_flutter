@@ -27,56 +27,74 @@ StudentQuiz? quizTask;
               horizontal: 12,
               vertical: 10
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${quizTask?.quiz?.title}",
-                        style: subtitleTextStyle2.copyWith(
-                            fontSize: 16
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${quizTask?.quiz?.title}",
+                              style: subtitleTextStyle2.copyWith(
+                                  fontSize: 16
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Spacer(),
+                            Text(
+                              "${quizTask?.sended??"" }",
+                              style: accentTextStyle.copyWith(
+                                color: accentColor3,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      Spacer(),
-                      Text(
-                        "${quizTask?.sended??"" }",
-                        style: accentTextStyle.copyWith(
-                          color: accentColor3,
-                            fontSize: 12,
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      children: [
+                        Text(
+                          "Score :",
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          "${quizTask?.score}",
+                          style: normalTextStyle.copyWith(
+                            fontSize: 28,
                             fontWeight: FontWeight.bold
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10),
-              Column(
-                children: [
-                  Text(
-                    "Score :",
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "${quizTask?.score}",
-                    style: normalTextStyle.copyWith(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold
+              Center(
+                child: Container(
+                  height: 2,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimens.clipRounded),
                     ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+                    color: Colors.grey,
                   ),
-                ],
+                ),
               ),
             ],
           ),

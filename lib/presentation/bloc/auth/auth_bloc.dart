@@ -93,8 +93,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         },
         (data) async {
           final token = "${data.tokenType} ${data.accessToken}";
+          final userId = "${data.student.id}";
           emit(AuthHasToken(token));
           await authUseCase.setToken(token);
+          await authUseCase.saveToSharedpref(Constant.userId, userId.toString());
         },
       );
     });
@@ -119,6 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authUseCase.unsetToken();
       await authUseCase.deteleToSharedPref(Constant.codeRoom);
       await authUseCase.deteleToSharedPref(Constant.roomId);
+      await authUseCase.deteleToSharedPref(Constant.userId);
     });
 
     on<AuthGetRoomEvent>((event, emit) async {

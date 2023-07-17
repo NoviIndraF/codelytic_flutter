@@ -28,7 +28,7 @@ class ChatBubble extends StatelessWidget {
               bottomLeft: Radius.circular(12),
               bottomRight: Radius.circular(12),
             ),
-            color: isSender?bgColor5 : bgColor4
+            color: isSender?bgColor1 : bgColor2
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class ChatBubble extends StatelessWidget {
                     ),
                     child: Text(
                         'Buy Now',
-                      style: TextStyle(fontWeight: medium, color: bgColor5),
+                      style: TextStyle(fontWeight: medium, color: bgColor1),
                     ),
                 )
               ],
@@ -125,7 +125,7 @@ class ChatBubble extends StatelessWidget {
                       bottomLeft: Radius.circular(12),
                       bottomRight: Radius.circular(12),
                     ),
-                    color: isSender?bgColor5 : bgColor4
+                    color: isSender?bgColor1 : bgColor2
                   ),
                   child: Text(
                     text,

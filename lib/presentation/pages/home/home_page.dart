@@ -2,17 +2,21 @@ import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/constant.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/text_app.dart';
+import 'package:codelytic/data/model/request/discussion/get_student_group_by_room_id_request.dart';
 import 'package:codelytic/data/model/request/materi/get_materi_by_room_id_request.dart';
 import 'package:codelytic/data/model/request/quiz/get_quiz_by_room_id_request.dart';
 import 'package:codelytic/data/model/request/room/get_room_by_id_request.dart';
 import 'package:codelytic/data/model/request/task/get_student_task_by_room_id_request.dart';
 import 'package:codelytic/data/model/request/task/get_task_by_room_code_request.dart';
+import 'package:codelytic/data/model/response/discussion/get_student_group_by_room_id_response.dart';
+import 'package:codelytic/presentation/bloc/discussion/discussion_bloc.dart';
 import 'package:codelytic/presentation/bloc/home/home_bloc.dart';
 import 'package:codelytic/presentation/bloc/materi/materi_bloc.dart';
 import 'package:codelytic/presentation/bloc/quiz/quiz_bloc.dart';
 import 'package:codelytic/presentation/bloc/room/room_bloc.dart';
 import 'package:codelytic/presentation/bloc/student/student_bloc.dart';
 import 'package:codelytic/presentation/bloc/task/task_bloc.dart';
+import 'package:codelytic/presentation/widgets/item_new_discussion_widget.dart';
 import 'package:codelytic/presentation/widgets/item_new_materi_widget.dart';
 import 'package:codelytic/presentation/widgets/item_new_quiz_widget.dart';
 import 'package:codelytic/presentation/widgets/item_new_task_widget.dart';
@@ -30,7 +34,7 @@ class HomePage extends StatelessWidget {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         if (state is HomeGetTokenAndCodeState) {
-          getAllData(context, state.token, state.code, state.roomId);
+          getAllData(context, state.token, state.code, state.roomId, state.userId);
         }
         if (state is HomeErrorState) {
           ShowWidget.dialog(context, state.message);
@@ -51,7 +55,13 @@ class HomePage extends StatelessWidget {
             return Stack(children: [
               Container(
                 height: Dimens.heighMax(context),
-                color: primaryColor,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [bgGd1, bgGd2],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
               ),
               RefreshIndicator(
                 onRefresh: () async {
@@ -69,34 +79,34 @@ class HomePage extends StatelessWidget {
                             bottom: 18.0,
                           ),
                           child: Container(
-                              height: Dimens.heighMax(context) * 0.32,
+                              height: 250,
                               width: Dimens.widthMax(context),
-                              color: primaryColor,
                               child: Column(
                                 children: [
                                   BlocBuilder<HomeBloc, HomeState>(
                                     builder: (context, state) {
-                                      //Header
-
                                       return Column(
                                         children: [
                                           BlocBuilder<StudentBloc,
                                               StudentState>(
                                             builder: (context, state) {
                                               if (state is StudentGetState) {
-                                                return header(
+                                                return Header(
                                                     TextApp.welcome,
                                                     state.getStudentEntity
                                                             .name ??
-                                                        ".....");
+                                                        ".....",
+                                                  context
+                                                );
                                               } else if (state is HomeLoading) {
                                                 return Center(
                                                     child:
                                                         CircularProgressIndicator());
                                               } else {
-                                                return header(
+                                                return Header(
                                                   ".....",
                                                   ".....",
+                                                  context
                                                 );
                                               }
                                             },
@@ -178,31 +188,25 @@ class HomePage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(Dimens.defaultMargin),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: Text(
-                        className,
-                        style: subtitleTextStyle,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                  Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text("|")),
-                  Expanded(
-                      flex: 1,
-                      child: Text(
-                        classMajor,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                ],
-              ),
+              Expanded(
+                  flex: 1,
+                  child: Text(
+                    "$className",
+                    style: subtitleTextStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Text(
+                    "$classMajor",
+                    style: linkTextStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -315,13 +319,15 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        announcementTitle(),
-        newMateriTitle(),
-        newMateris(),
-        newTugasTitle(),
-        newTasks(),
-        newQuisTitle(),
-        newQuiz(),
+        AnnouncementTitle(),
+        NewMateriTitle(),
+        NewMateris(),
+        NewTugasTitle(),
+        NewTasks(),
+        NewDiscussionTitle(),
+        NewDiscussions(),
+        NewQuisTitle(),
+        NewQuiz(),
         SizedBox(
           height: 20,
         )
@@ -329,7 +335,73 @@ class HomePage extends StatelessWidget {
     ));
   }
 
-  StatelessWidget newMateriTitle() {
+  StatelessWidget Header(String title, String name, BuildContext context) {
+    return Container(
+      width: Dimens.widthMax(context),
+      child:
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 16,
+              ),
+              Container(
+                height: 40,
+                width: 40,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  child: SvgPicture.asset(
+                    'assets/icons/ic-student.svg',
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Expanded(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: secondaryTextStyle.copyWith(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "$name",
+                        style: secondaryTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: semibold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                  child: Icon(
+                    Icons.notifications_active_outlined,
+                    color: secondaryColor,
+                  )),
+            ],
+          ),
+    );
+  }
+
+  StatelessWidget AnnouncementTitle() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: 6, left: Dimens.defaultMargin, right: Dimens.defaultMargin),
+    );
+  }
+
+  StatelessWidget NewMateriTitle() {
     return Container(
       margin: EdgeInsets.only(
           top: Dimens.defaultMargin,
@@ -339,7 +411,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget newMateris() {
+  StatelessWidget NewMateris() {
     return Container(
       child: BlocBuilder<MateriBloc, MateriState>(
         buildWhen: (previousState, state) {
@@ -348,7 +420,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           if (state is MateriGetMateriByRoomIdState) {
             print(state.toString());
-            if (state.getMateriByRoomIdResponseEntity.materi == null) {
+            if (state.getMateriByRoomIdResponseEntity.materi!.isEmpty) {
               return Container(
                   height: 140,
                   margin: EdgeInsets.only(
@@ -398,14 +470,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget announcementTitle() {
-    return Container(
-      margin: EdgeInsets.only(
-          top: 6, left: Dimens.defaultMargin, right: Dimens.defaultMargin),
-    );
-  }
-
-  StatelessWidget newTugasTitle() {
+  StatelessWidget NewTugasTitle() {
     return Container(
       margin: EdgeInsets.only(
           top: Dimens.defaultMargin / 2,
@@ -415,7 +480,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget newTasks() {
+  StatelessWidget NewTasks() {
     return Container(
       child: BlocBuilder<TaskBloc, TaskState>(
         buildWhen: (context, state) {
@@ -480,7 +545,83 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget newQuisTitle() {
+  StatelessWidget NewDiscussionTitle() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: Dimens.defaultMargin / 2,
+          left: Dimens.defaultMargin,
+          right: Dimens.defaultMargin),
+      child: Text('Diskusi Terbaru', style: subtitleTextStyle),
+    );
+  }
+
+  StatelessWidget NewDiscussions() {
+    return Container(
+      child: BlocBuilder<DiscussionBloc, DiscussionState>(
+        buildWhen: (context, state) {
+          return state is DiscussionGetStudentGroupByRoomIdState;
+        },
+        builder: (context, states) {
+          if (states is DiscussionGetStudentGroupByRoomIdState) {
+            List<StudentGroup> studenGroup = states.entity.studentGroup??[];
+
+            if (studenGroup.isEmpty) {
+              return Container(
+                  height: 120,
+                  margin: EdgeInsets.only(
+                    top: 12,
+                    left: Dimens.defaultMargin,
+                  ),
+                  child: Center(
+                    child: Text(TextApp.nothingDiscussion),
+                  ));
+            }
+            return Container(
+              height: 120,
+              margin: EdgeInsets.only(
+                left: Dimens.defaultMargin,
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                    height: 120,
+                    child: Row(
+                      children: states.entity.studentGroup!
+                          .asMap()
+                          .map((index, item) {
+                        return MapEntry(
+                          index,
+                          ItemNewDiscussionWidget(
+                            item,
+                          ),
+                        );
+                      })
+                          .values
+                          .toList(),
+                    )),
+              ),
+            );
+          } else if (states is HomeLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Container(
+                height: 140,
+                margin: EdgeInsets.only(
+                  top: 12,
+                  left: Dimens.defaultMargin,
+                ),
+                child: Center(
+                  child: Text(TextApp.somethingWrong),
+                ));
+          }
+        },
+      ),
+    );
+  }
+
+  StatelessWidget NewQuisTitle() {
     return Container(
       margin: EdgeInsets.only(
           top: Dimens.defaultMargin / 2,
@@ -490,7 +631,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget newQuiz() {
+  StatelessWidget NewQuiz() {
     return Container(
       child: BlocBuilder<QuizBloc, QuizState>(
         buildWhen: (context, state) {
@@ -546,70 +687,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  StatelessWidget header(String title, String name) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 16,
-              ),
-              Container(
-                height: 40,
-                width: 40,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: SvgPicture.asset(
-                    'assets/icons/ic-student.svg',
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: secondaryTextStyle.copyWith(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    name,
-                    style: secondaryTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: semibold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Container(
-              padding: EdgeInsets.only(right: 24),
-              child: Icon(
-                Icons.notifications_active_outlined,
-                color: secondaryColor,
-              )),
-        ],
-      ),
-    );
-  }
 }
 
 void getAllData(
-    BuildContext context, String token, String code, String roomId) {
+    BuildContext context, String token, String code, String roomId, String userId) {
   Constant.setToken(token);
   Constant.setCode(code);
   Constant.setRoomId(int.parse(roomId));
+  Constant.setUserId(int.parse(userId));
 
   GetRoomByIdRequest requestRoom = GetRoomByIdRequest(room_id: roomId);
   context.read<RoomBloc>().add(RoomGetByIdEvent(token, requestRoom));
@@ -626,6 +711,11 @@ void getAllData(
       GetStudentTaskByRoomIdRequest(room_id: Constant.getRoomId());
   context.read<TaskBloc>().add(TaskGetStudentTaskByRoomIdEvent(
       getStudentTaskByRoomIdRequest, Constant.getToken()));
+
+  GetStudentGroupByRoomIdRequest getStudentGroupByRoomIdRequest =
+  GetStudentGroupByRoomIdRequest(room_id: Constant.getRoomId());
+  context.read<DiscussionBloc>().add(DiscussionGetStudentGroupByRoomIdEvent(Constant.getToken(),
+    getStudentGroupByRoomIdRequest));
 
   GetQuizByRoomIdRequest requestQuiz = GetQuizByRoomIdRequest(room_id: roomId);
   context.read<QuizBloc>().add(QuizGetQuizByRoomCodeEvent(token, requestQuiz));

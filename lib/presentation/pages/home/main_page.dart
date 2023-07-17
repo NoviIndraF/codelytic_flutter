@@ -27,24 +27,8 @@ class _MainPageState extends State<MainPage> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: bgColor1,
-          floatingActionButton: cartButton(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: customButtonNav(),
           body: pulu()),
-    );
-  }
-
-  FloatingActionButton cartButton() {
-    return FloatingActionButton(
-      onPressed: () {
-         Navigator.pushNamed(context, AppRoute.intro);
-      },
-      backgroundColor: secondaryColor,
-      child: Image.asset(
-        'assets/icons/ic-cart.png',
-        width: 20,
-        color: primaryColor,
-      ),
     );
   }
 
@@ -52,7 +36,7 @@ class _MainPageState extends State<MainPage> {
     switch (currentIndex) {
       case 0:
         return HomePage();
-      case 3:
+      case 1:
         return ProfilePage();
         break;
       default:
@@ -95,32 +79,32 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     label: ''),
-                BottomNavigationBarItem(
-                  icon: Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 10),
-                    child: Icon(
-                      Icons.chat_bubble,
-                      color:
-                      currentIndex == 1
-                          ? secondaryColor
-                          : primaryDark,
-                    ),
-                  ),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 10),
-                    child: Icon(
-                      Icons.favorite,
-                      color:
-                      currentIndex == 2
-                          ? secondaryColor
-                          : primaryDark,
-                    ),
-                  ),
-                  label: '',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Container(
+                //     margin: EdgeInsets.only(top: 20, bottom: 10),
+                //     child: Icon(
+                //       Icons.chat_bubble,
+                //       color:
+                //       currentIndex == 1
+                //           ? secondaryColor
+                //           : primaryDark,
+                //     ),
+                //   ),
+                //   label: '',
+                // ),
+                // BottomNavigationBarItem(
+                //   icon: Container(
+                //     margin: EdgeInsets.only(top: 20, bottom: 10),
+                //     child: Icon(
+                //       Icons.favorite,
+                //       color:
+                //       currentIndex == 2
+                //           ? secondaryColor
+                //           : primaryDark,
+                //     ),
+                //   ),
+                //   label: '',
+                // ),
                 BottomNavigationBarItem(
                   icon: Container(
                     margin: EdgeInsets.only(top: 20, bottom: 10),

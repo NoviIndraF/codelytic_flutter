@@ -39,12 +39,20 @@ class TextApp{
   static const String tfHintAnswer               = "Jawaban Anda...";
   static const String tfInvalidFormatAnswerSubmit = "Jawaban tidak boleh kosong";
 
+
+  static const String tfCodeGroup                 = "Kode Kelompok";
+  static const String tfHintGroupClass               = "Masukkan Kode Kelompok...";
+
+  static const String tfComment                    = "Komentar";
+  static const String tfHintComment               = "Komentar Anda...";
+
   // Button
   static const String btnLogin    = "Masuk";
   static const String btnRegister = "Daftar";
   static const String btnStart = "Mulai";
   static const String btnClose = "Tutup";
   static const String btnCheckReedemCodeClass = "Periksa Kelas";
+  static const String btnCheckReedemCodeGroup = "Periksa Kelompok";
 
 
   // LoginPage
@@ -63,6 +71,9 @@ class TextApp{
   static const String task = "Tugas";
   static const String quiz = "Kuis";
   static const String disscussion = "Diskusi";
+
+  static const String nothingHistoryTask = "Tidak ada pengumpulan tugas";
+  static const String nothingHistoryQuiz = "Tidak ada histori quiz";
 
   static const String nothingMateri = "Tidak ada materi";
   static const String nothingTask = "Tidak ada tugas";

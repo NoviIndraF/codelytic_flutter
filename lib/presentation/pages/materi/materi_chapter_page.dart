@@ -13,138 +13,147 @@ class MateriChapterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: [
-    Column(
-      children: [
-        Container(
-          height: Dimens.heighMax(context) * 0.4,
-          color: primaryColor,
-        ),
-        Expanded(
-          child: Container(
-            color: bgColor1,
-          ),
-        ),
-      ],
-    ),
-    SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(padding: EdgeInsets.only(top: 20),
-              height: Dimens.heighMax(context) * 0.33,
-              width: Dimens.widthMax(context),
-              color: primaryColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Sub Materi",
-                        style: secondaryTextStyle.copyWith(fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(children: [
+          Column(
+            children: [
+              Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [primaryColor, bgGd1],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      right: Dimens.defaultMargin,
-                      left: Dimens.defaultMargin,
-                      bottom: Dimens.defaultMargin / 2,
-                    ),
-                    child: BlocBuilder<MateriBloc, MateriState>(
-                      buildWhen: (context, state) =>
-                          state is MateriGetChapterByMateriIdState,
-                      builder: (context, state) {
-                        if (state is MateriGetChapterByMateriIdState) {
-                          return MateriDetailWidget(
-                            context,
-                            true,
-                            state.getChapterByMateriIdEntity.title ??
-                                ".....",
-                            state.getChapterByMateriIdEntity.description ??
-                                ".....",
-                            state.getChapterByMateriIdEntity.createdAt ??
-                                "...",
-                            state.getChapterByMateriIdEntity.updatedAt ??
-                                "...",
-                          );
-                        } else if (state is MateriLoading) {
-                          return Center(child: CircularProgressIndicator());
-                        } else {
-                          return MateriDetailWidget(
-                            context,
-                            false,
-                            ".....",
-                            ".....",
-                            "...",
-                            "...",
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              )),
-          Container(
-              width: Dimens.widthMax(context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(Dimens.clipRounded),
-                  topLeft: Radius.circular(Dimens.clipRounded),
                 ),
-                color: bgColor1,
               ),
-              child: Padding(
-                padding: EdgeInsets.only(top: 24, right: 24, left: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 8,
-                        width: MediaQuery.of(context).size.width / 2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Dimens.clipRounded),
-                          ),
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 28,
-                    ),
-                    Text(
-                      "List SubMateri",
-                      style: subtitleTextStyle,
-                    ),
-                    Content(context),
-                    SizedBox(
-                      height: 28,
-                    ),
-                  ],
+              Expanded(
+                child: Container(
+                  color: bgColor1,
                 ),
-              ))
-        ],
+              ),
+            ],
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                    height: 250,
+                    width: Dimens.widthMax(context),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: secondaryColor,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Sub Materi",
+                              style: secondaryTextStyle.copyWith(fontSize: 20),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                            right: Dimens.defaultMargin,
+                            left: Dimens.defaultMargin,
+                            bottom: Dimens.defaultMargin / 2,
+                          ),
+                          child: BlocBuilder<MateriBloc, MateriState>(
+                            buildWhen: (context, state) =>
+                                state is MateriGetChapterByMateriIdState,
+                            builder: (context, state) {
+                              if (state is MateriGetChapterByMateriIdState) {
+                                return MateriDetailWidget(
+                                  context,
+                                  true,
+                                  state.getChapterByMateriIdEntity.title ??
+                                      ".....",
+                                  state.getChapterByMateriIdEntity
+                                          .description ??
+                                      ".....",
+                                  state.getChapterByMateriIdEntity.createdAt ??
+                                      "...",
+                                  state.getChapterByMateriIdEntity.updatedAt ??
+                                      "...",
+                                );
+                              } else if (state is MateriLoading) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                return MateriDetailWidget(
+                                  context,
+                                  false,
+                                  ".....",
+                                  ".....",
+                                  "...",
+                                  "...",
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                    width: Dimens.widthMax(context),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(Dimens.clipRounded),
+                        topLeft: Radius.circular(Dimens.clipRounded),
+                      ),
+                      color: bgColor1,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 24, right: 24, left: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Container(
+                              height: 8,
+                              width: MediaQuery.of(context).size.width / 2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Dimens.clipRounded),
+                                ),
+                                color: primaryColor,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 28,
+                          ),
+                          Text(
+                            "List SubMateri",
+                            style: subtitleTextStyle,
+                          ),
+                          Content(context),
+                          SizedBox(
+                            height: 28,
+                          ),
+                        ],
+                      ),
+                    ))
+              ],
+            ),
+          )
+        ]),
       ),
-    )
-      ]),
     );
   }
 }
@@ -221,7 +230,7 @@ StatelessWidget MateriDetailWidget(
       child: Container(
         padding: EdgeInsets.symmetric(
             horizontal: Dimens.defaultMargin,
-            vertical: Dimens.defaultMargin / 2),
+            vertical: Dimens.defaultMargin ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

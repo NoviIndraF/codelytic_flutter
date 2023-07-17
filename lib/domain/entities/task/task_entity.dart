@@ -8,7 +8,7 @@ class TaskEntity extends Equatable{
   String? note;
   String? content;
   String? deadline;
-  String? status;
+  int? status;
   int? roomId;
   String? createdAt;
   String? updatedAt;

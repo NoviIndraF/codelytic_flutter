@@ -2,9 +2,14 @@ class Constant {
   static const baseUrl = "http://10.0.2.2:8000/api/";
   // static final baseUrl = "http://10.0.2.2:8000/api/";
   // SharedPreferences
-  static final token = "token";
-  static final codeRoom = "code_room";
-  static final roomId = "room_id";
+  static const token = "token";
+  static const codeRoom = "code_room";
+  static const roomId = "room_id";
+  static const userId = "user_id";
+
+
+  static const DISCUSSION = 1;
+  static const CHATGROUP = 2;
 
   static String sToken="";
   static void setToken (String rtoken){
@@ -29,6 +34,14 @@ class Constant {
   }
   static int getRoomId (){
     return sRoomId;
+  }
+
+  static int iUserId=0;
+  static void setUserId (int id){
+    iUserId = id;
+  }
+  static int getUserId (){
+    return iUserId;
   }
 
 }

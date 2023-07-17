@@ -15,35 +15,35 @@ StatelessWidget ItemClassWidget(BuildContext context, Data data) {
           .read<AuthBloc>()
           .add(AuthSaveRoomIdEvent(data.roomId.toString() ?? ""));
     },
-    child: Container(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
+    child: Column(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.all(Dimens.defaultMargin),
+          decoration: BoxDecoration(
+            borderRadius:
+            BorderRadius.all(Radius.circular(Dimens.clipRounded)),
+            color: bgColor3,
           ),
-          Container(
-            padding: EdgeInsets.all(Dimens.defaultMargin),
-            decoration: BoxDecoration(
-              borderRadius:
-              BorderRadius.all(Radius.circular(Dimens.clipRounded)),
-              color: bgColor3,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(Dimens.defaultMargin),
-                  decoration: BoxDecoration(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(Dimens.clipRounded)),
-                    color: accentColor2,
-                  ),
-                  child: Icon(
-                    Icons.class_,
-                    color: secondaryColor,
-                  ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(Dimens.defaultMargin),
+                decoration: BoxDecoration(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(Dimens.clipRounded)),
+                  color: accentColor2,
                 ),
-                Container(
+                child: Icon(
+                  Icons.class_,
+                  color: secondaryColor,
+                ),
+              ),
+              Flexible(
+                child: Container(
                   padding: EdgeInsets.all(Dimens.defaultMargin),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,12 +69,12 @@ StatelessWidget ItemClassWidget(BuildContext context, Data data) {
                       ),
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

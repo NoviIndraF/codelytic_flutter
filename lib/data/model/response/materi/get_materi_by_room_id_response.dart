@@ -51,7 +51,7 @@ class Materi extends Equatable{
   String? slug;
   String? title;
   String? description;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
   Materi({

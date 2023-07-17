@@ -14,9 +14,10 @@ Color priceColor = const Color(0xff2C96F1);
 Color bgColor1 = const Color(0xFFF1F1FA);
 Color bgColor2 = const Color(0xff2C96F1);
 Color bgColor3 = const Color(0xffFCFCFF);
-Color bgColor4  = const Color(0xff252836);
-Color bgColor5  = const Color(0xff2b2844);
-Color bgColor6  = const Color(0xffECEDEF);
+
+Color bgGd1= const Color(0xFF3772FF);
+Color bgGd2= const Color(0xFF00CCFF);
+
 
 Color primaryTextColor = const Color(0xff2C96F1);
 Color secondaryTextColor = const Color(0xffffffff);

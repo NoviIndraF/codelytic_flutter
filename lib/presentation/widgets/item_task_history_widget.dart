@@ -13,7 +13,7 @@ int? index;
 StudentTask? studentTask;
   @override
   Widget build(BuildContext context) {
-     return Padding(
+    return Padding(
       padding: const EdgeInsets.only(
           top: 8),
       child: GestureDetector(
@@ -21,64 +21,83 @@ StudentTask? studentTask;
 
         },
         child: Container(
-          height: 128,
+          height: 140,
           padding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 10
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: bgColor3,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${studentTask?.task?.title}",
-                        style: subtitleTextStyle2.copyWith(
-                            fontSize: 16
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${studentTask?.task?.title}",
+                              style: subtitleTextStyle2.copyWith(
+                                  fontSize: 14
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "Jawaban :",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),Text(
+                              "${studentTask?.answer}",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Dikirim: ${studentTask?.sended??"" }",
+                              style: accentTextStyle.copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      Text(
-                        "Jawaban : ${studentTask?.answer}",
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Spacer(),
-                      Text(
-                        "Dikirim: ${studentTask?.sended??"" }",
-                        style: accentTextStyle.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Dimens.clipRounded)
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        color: accentColor,
                       ),
-                    ],
-                  ),
+                      child: Icon(
+                        Icons.book,
+                        color: secondaryColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10),
-              Container(
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(Dimens.clipRounded)
+              Center(
+                child: Container(
+                  height: 2,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimens.clipRounded),
+                    ),
+                    color: Colors.grey,
                   ),
-                  color: accentColor,
-                ),
-                child: Icon(
-                  Icons.book,
-                  color: secondaryColor,
                 ),
               ),
             ],

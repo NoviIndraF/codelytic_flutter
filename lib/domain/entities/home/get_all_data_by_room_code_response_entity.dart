@@ -88,7 +88,7 @@ class MateriEntity extends Equatable{
   String? slug;
   String? title;
   String? description;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
@@ -122,7 +122,7 @@ class QuizEntity extends Equatable{
   String? title;
   String? description;
   int? level;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
@@ -161,7 +161,7 @@ class TaskEntity extends Equatable{
   String? note;
   String? content;
   String? deadline;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 

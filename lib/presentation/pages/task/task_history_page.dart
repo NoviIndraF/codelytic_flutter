@@ -124,7 +124,7 @@ class TaskHistoryPage extends StatelessWidget {
                     left: Dimens.defaultMargin,
                   ),
                   child: Center(
-                    child: Text(TextApp.nothingTask),
+                    child: Text(TextApp.nothingHistoryTask),
                   ));
             } else {
               return Column(

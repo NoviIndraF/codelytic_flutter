@@ -11,7 +11,7 @@ class Task extends Equatable{
   String? note;
   String? content;
   String? deadline;
-  String? status;
+  int? status;
   int? roomId;
   bool? checked;
   String? createdAt;

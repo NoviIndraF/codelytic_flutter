@@ -14,6 +14,14 @@ class StudentGetState extends StudentState{
   List<Object?> get props => [getStudentEntity];
 }
 
+class StudentUpdateState extends StudentState{
+  final StudentEntity result;
+  StudentUpdateState(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
 class StudentFailedState extends StudentState{
   final String message;
 

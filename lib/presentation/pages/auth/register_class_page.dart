@@ -2,6 +2,7 @@ import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/text_app.dart';
 import 'package:codelytic/common/theme.dart';
+import 'package:codelytic/data/model/argument/route_argument.dart';
 import 'package:codelytic/data/model/request/authentication/get_room_by_code_request.dart';
 import 'package:codelytic/data/model/request/authentication/register_room_request.dart';
 import 'package:codelytic/domain/entities/authentication/get_room_by_code_response_entity.dart';
@@ -33,7 +34,7 @@ class RegisterClassPage extends StatelessWidget {
           if(state.result == "1"){
             Navigator.popAndPushNamed(context, AppRoute.main);
           } else{
-            Navigator.popAndPushNamed(context, AppRoute.intro);
+            Navigator.popAndPushNamed(context, AppRoute.intro, arguments: RouteArgument(route: AppRoute.main));
           }
         }
       },
@@ -83,7 +84,7 @@ class RegisterClassPage extends StatelessWidget {
     );
   }
 
-  StatelessWidget codeClassInput() {
+  StatelessWidget CodeClassInput() {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -142,17 +143,17 @@ class RegisterClassPage extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              codeClassInput(),
+              CodeClassInput(),
               (state is AuthGetRoomByCode)
                   ? (state.result.id == null)
                       ? Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text("Data kelas tidak tersedia"),
                       )
-                      : itemClassWidget(context,  state.result)
+                      : ItemClassWidget(context,  state.result)
                   : SizedBox(),
               (state is AuthLoading) ? CircularProgressIndicator() : SizedBox(),
-              btnChekCodeClassButton(context),
+              BtnChekCodeClassButton(context),
               SizedBox(
                 height: 20,
               ),
@@ -165,7 +166,7 @@ class RegisterClassPage extends StatelessWidget {
     );
   }
 
-  StatelessWidget btnChekCodeClassButton(BuildContext context) {
+  StatelessWidget BtnChekCodeClassButton(BuildContext context) {
     return Container(
       height: 50,
       width: double.infinity,
@@ -195,7 +196,7 @@ class RegisterClassPage extends StatelessWidget {
     );
   }
 
-  StatelessWidget itemClassWidget(
+  StatelessWidget ItemClassWidget(
     BuildContext context,
       GetRoomByCodeResponseEntity data
   ) {
@@ -238,31 +239,33 @@ class RegisterClassPage extends StatelessWidget {
                       color: secondaryColor,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(Dimens.defaultMargin),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.name ?? "",
-                          style: blackTextStyle.copyWith(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          data.major ?? "",
-                          style: blackTextStyle.copyWith(
-                              fontSize: 10, color: primaryColor),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          data.user?.name ?? "",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.all(Dimens.defaultMargin),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.name ?? "",
+                            style: blackTextStyle.copyWith(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            data.major ?? "",
+                            style: blackTextStyle.copyWith(
+                                fontSize: 10, color: primaryColor),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            data.user?.name ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],

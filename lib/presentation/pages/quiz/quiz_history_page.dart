@@ -126,7 +126,7 @@ class QuizHistoryPage extends StatelessWidget {
                     left: Dimens.defaultMargin,
                   ),
                   child: Center(
-                    child: Text(TextApp.nothingTask),
+                    child: Text(TextApp.nothingHistoryQuiz),
                   ));
             } else {
               return Column(

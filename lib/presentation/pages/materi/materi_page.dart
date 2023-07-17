@@ -23,93 +23,94 @@ class MateriPage extends StatelessWidget {
         .read<MateriBloc>()
         .add(MateriGetMateriByRoomIdEvent(Constant.getToken(), requestMateri));
 
-    return Scaffold(
-      body: Stack(children: [
-    Column(
-      children: [
-        Container(
-          height: Dimens.heighMax(context)*0.3,
-          color: primaryColor,
-        ),
-        Expanded(
-          child: Container(
-            color: bgColor1,
-          ),
-        ),
-      ],
-    ),
-    SingleChildScrollView(
-      child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(children: [
+      Column(
         children: [
           Container(
-              padding: EdgeInsets.only(top: 20),
-              height: 100,
-              width: Dimens.widthMax(context),
-              color: primaryColor,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "Materi",
-                    style: secondaryTextStyle.copyWith(fontSize: 20),
-                  ),
-                ],
-              )),
-          Container(
-              width: Dimens.widthMax(context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(Dimens.clipRounded),
-                  topLeft: Radius.circular(Dimens.clipRounded),
-                ),
-                color: bgColor1,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(top: 24, right: 24, left: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            height: Dimens.heighMax(context)*0.3,
+            color: primaryColor,
+          ),
+          Expanded(
+            child: Container(
+              color: bgColor1,
+            ),
+          ),
+        ],
+      ),
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                height: 80,
+                width: Dimens.widthMax(context),
+                color: primaryColor,
+                child: Row(
                   children: [
-                    Center(
-                      child: Container(
-                        height: 8,
-                        width: MediaQuery.of(context).size.width / 2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Dimens.clipRounded),
-                          ),
-                          color: primaryColor,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: secondaryColor,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 28,
-                    ),
                     Text(
-                      "List Materi",
-                      style: subtitleTextStyle,
-                    ),
-                    Content(context),
-                    SizedBox(
-                      height: 28,
+                      "Materi",
+                      style: secondaryTextStyle.copyWith(fontSize: 20),
                     ),
                   ],
+                )),
+            Container(
+                width: Dimens.widthMax(context),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Dimens.clipRounded),
+                    topLeft: Radius.circular(Dimens.clipRounded),
+                  ),
+                  color: bgColor1,
                 ),
-              ))
-        ],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 24, right: 24, left: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 8,
+                          width: MediaQuery.of(context).size.width / 2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(Dimens.clipRounded),
+                            ),
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 28,
+                      ),
+                      Text(
+                        "List Materi",
+                        style: subtitleTextStyle,
+                      ),
+                      Content(context),
+                      SizedBox(
+                        height: 28,
+                      ),
+                    ],
+                  ),
+                ))
+          ],
+        ),
+      )
+        ]),
       ),
-    )
-      ]),
     );
   }
 }

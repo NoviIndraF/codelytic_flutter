@@ -9,3 +9,12 @@ class StudentGetEvent extends StudentEvent{
   @override
   List<Object?> get props => [token];
 }
+
+class StudentUpdateEvent extends StudentEvent{
+  final String token;
+  final UpdateProfileRequest request;
+  StudentUpdateEvent(this.token, this.request);
+
+  @override
+  List<Object?> get props => [token,request];
+}

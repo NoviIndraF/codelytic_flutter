@@ -42,22 +42,21 @@ class ItemNewMateriWidget extends StatelessWidget {
             color: bgColor3,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 padding: EdgeInsets.all(10),
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(Dimens.clipRounded/2)),
-                  color: primaryColor
-                ),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(Dimens.clipRounded / 2)),
+                    color: primaryColor),
                 child: Container(
                   child: SvgPicture.asset(
                     'assets/icons/ic-materi.svg',
                     width: 20,
-                      height: 20,
+                    height: 20,
                   ),
                 ),
               ),
@@ -70,14 +69,16 @@ class ItemNewMateriWidget extends StatelessWidget {
                     Text(
                       title ?? "",
                       style: subtitleTextStyle2.copyWith(fontSize: 14),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      description ?? "",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    description == ""
+                        ? SizedBox()
+                        : Text(
+                            description ?? "",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                     Text(
                       'Dibuat : $createdAt ',
                       style: accentTextStyle2.copyWith(

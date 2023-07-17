@@ -11,12 +11,6 @@ class AuthRegisterRoomResponse extends Equatable{
     room_id = json['room_id'];
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['room_id'] = room_id;
-    return _data;
-  }
-
   AuthRegisterRoomResponseEntity toEntity() => AuthRegisterRoomResponseEntity(room_id: room_id);
 
   @override

@@ -12,9 +12,13 @@ class AppRoute {
   static const String answerDetail = "/answerDetail";
   static const String chapter = "/chapter";
   static const String disscussion = "/disscussion";
+  static const String disscussionDetailPage = "/disscussionDetailPage";
+  static const String groupAdd = "/groupAdd";
   static const String intro = "/intro";
   static const String materi = "/materi";
   static const String materiChapter = "/materiChapter";
+  static const String profileDetail = "/profileDetail";
+  static const String profileEdit = "/profileEdit";
   static const String task = "/task";
   static const String taskDetail = "/taskDetail";
   static const String taskHistory = "/taskHistory";

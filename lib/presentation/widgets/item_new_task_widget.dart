@@ -32,27 +32,26 @@ class ItemNewTaskWidget extends StatelessWidget {
             color: bgColor3,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Stack(
                 children: [
-          Container(
-          padding: EdgeInsets.all(10),
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-              borderRadius:
-              BorderRadius.all(Radius.circular(Dimens.clipRounded/2)),
-              color: accentColor
-          ),
-          child: Container(
-            child: SvgPicture.asset(
-              'assets/icons/ic-task.svg',
-              width: 20,
-              height: 20,
-            ),
-          ),
-        ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Dimens.clipRounded / 2)),
+                        color: accentColor),
+                    child: Container(
+                      child: SvgPicture.asset(
+                        'assets/icons/ic-task.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  ),
                   (task?.checked ?? false)
                       ? Positioned(
                           bottom: 0,
@@ -78,15 +77,17 @@ class ItemNewTaskWidget extends StatelessWidget {
                   children: [
                     Text(
                       "${task?.title}",
-                      style: subtitleTextStyle2.copyWith(fontSize: 16),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      "${task?.description}",
+                      style: subtitleTextStyle2.copyWith(fontSize: 14),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    task?.description == ""
+                        ? SizedBox()
+                        : Text(
+                            "${task?.description}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                     Text(
                       "Deadline : ${task?.deadline} ",
                       style: accentTextStyle.copyWith(

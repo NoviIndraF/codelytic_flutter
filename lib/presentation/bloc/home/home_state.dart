@@ -19,8 +19,9 @@ class HomeGetTokenAndCodeState extends HomeState{
   final String token;
   final String code;
   final String roomId;
+  final String userId;
 
-  HomeGetTokenAndCodeState({required this.token, required this.code, required this.roomId});
+  HomeGetTokenAndCodeState({required this.token, required this.code, required this.roomId, required this.userId});
 
   @override
   List<Object?> get props => [token,code];

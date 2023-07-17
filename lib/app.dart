@@ -1,4 +1,5 @@
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
+import 'package:codelytic/presentation/bloc/discussion/discussion_bloc.dart';
 import 'package:codelytic/presentation/bloc/home/home_bloc.dart';
 import 'package:codelytic/presentation/bloc/materi/materi_bloc.dart';
 import 'package:codelytic/presentation/bloc/quiz/quiz_bloc.dart';
@@ -7,13 +8,18 @@ import 'package:codelytic/presentation/bloc/student/student_bloc.dart';
 import 'package:codelytic/presentation/bloc/task/task_bloc.dart';
 import 'package:codelytic/presentation/pages/auth/login_class_page.dart';
 import 'package:codelytic/presentation/pages/auth/register_class_page.dart';
+import 'package:codelytic/presentation/pages/discussion/add_group_page.dart';
+import 'package:codelytic/presentation/pages/discussion/discussion_detail_page.dart';
+import 'package:codelytic/presentation/pages/discussion/discussion_page.dart';
 import 'package:codelytic/presentation/pages/home/main_page.dart';
 import 'package:codelytic/presentation/pages/auth/login_page.dart';
+import 'package:codelytic/presentation/pages/profile/profile_detail_page.dart';
 import 'package:codelytic/presentation/pages/intro_page.dart';
 import 'package:codelytic/presentation/pages/materi/chapter_page.dart';
 import 'package:codelytic/presentation/pages/materi/materi_chapter_page.dart';
 import 'package:codelytic/presentation/pages/materi/materi_page.dart';
 import 'package:codelytic/presentation/pages/auth/register_page.dart';
+import 'package:codelytic/presentation/pages/profile/profile_edit_page.dart';
 import 'package:codelytic/presentation/pages/quiz/answer_detail_page.dart';
 import 'package:codelytic/presentation/pages/quiz/question_page.dart';
 import 'package:codelytic/presentation/pages/quiz/quiz_all_history_page.dart';
@@ -39,6 +45,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => di.locator<AuthBloc>()),
+        BlocProvider(create: (_) => di.locator<DiscussionBloc>()),
         BlocProvider(create: (_) => di.locator<HomeBloc>()),
         BlocProvider(create: (_) => di.locator<MateriBloc>()),
         BlocProvider(create: (_) => di.locator<QuizBloc>()),
@@ -86,6 +93,15 @@ class App extends StatelessWidget {
             case AppRoute.chapter:
               builder = (BuildContext context) => ChapterPage();
               break;
+            case AppRoute.disscussion:
+              builder = (BuildContext context) => DiscussionPage();
+              break;
+            case AppRoute.disscussionDetailPage:
+              builder = (BuildContext context) => DiscussionDetailPage();
+              break;
+            case AppRoute.groupAdd:
+              builder = (BuildContext context) => GroupAddPage();
+              break;
             case AppRoute.intro:
               builder = (BuildContext context) => IntroPage();
               break;
@@ -103,6 +119,12 @@ class App extends StatelessWidget {
               break;
             case AppRoute.materiChapter:
               builder = (BuildContext context) => MateriChapterPage();
+              break;
+            case AppRoute.profileDetail:
+              builder = (BuildContext context) => ProfileDetailPage();
+              break;
+            case AppRoute.profileEdit:
+              builder = (BuildContext context) => ProfileEditPage();
               break;
             case AppRoute.questionPage:
               builder = (BuildContext context) => QuestionPage();

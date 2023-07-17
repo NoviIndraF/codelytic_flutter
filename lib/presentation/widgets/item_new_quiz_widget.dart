@@ -6,8 +6,7 @@ import 'package:codelytic/common/theme.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ItemNewQuizWidget extends StatelessWidget {
-  ItemNewQuizWidget(this.item, {Key? key})
-      : super(key: key);
+  ItemNewQuizWidget(this.item, {Key? key}) : super(key: key);
   Quiz? item;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class ItemNewQuizWidget extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoute.quizDetail,arguments:item);
+        Navigator.pushNamed(context, AppRoute.quizDetail, arguments: item);
       },
       child: Container(
         child: Wrap(
@@ -73,12 +72,14 @@ class ItemNewQuizWidget extends StatelessWidget {
                   SizedBox(
                     height: 4,
                   ),
-                  Text(
-                    item?.description ?? "",
-                    style: normalTextStyle.copyWith(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  )
+                  item?.description == ""
+                      ? SizedBox()
+                      : Text(
+                          item?.description ?? "",
+                          style: normalTextStyle.copyWith(fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        )
                 ],
               ),
             )

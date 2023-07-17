@@ -1,6 +1,7 @@
 import 'package:codelytic/common/app_route.dart';
 import 'package:codelytic/common/dimens.dart';
 import 'package:codelytic/common/theme.dart';
+import 'package:codelytic/data/model/argument/route_argument.dart';
 import 'package:codelytic/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -8,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:lottie/lottie.dart';
-
-import 'home/home_page.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({Key? key}) : super(key: key);
@@ -21,9 +20,13 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(BuildContext context) {
+  void _onIntroEnd(BuildContext context, RouteArgument routes) {
     context.read<AuthBloc>().add(AuthSaveFirstEvent("1"));
-    Navigator.popAndPushNamed(context, AppRoute.main);
+    if (routes.route == ""){
+      Navigator.pop(context);
+    } else{
+      Navigator.popAndPushNamed(context, routes.route??AppRoute.main);
+    }
   }
 
   Widget _buildImage(String assetName, [double width = 100]) {
@@ -32,6 +35,8 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
+    RouteArgument routes = ModalRoute.of(context)!.settings.arguments as RouteArgument;
+
     const bodyStyle = TextStyle(fontSize: 19.0, color: Colors.white);
 
     const pageDecoration = PageDecoration(
@@ -229,8 +234,8 @@ class _IntroPageState extends State<IntroPage> {
             decoration: pageDecoration,
           ),
         ],
-        onDone: () => _onIntroEnd(context),
-        onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+        onDone: () => _onIntroEnd(context, routes),
+        onSkip: () => _onIntroEnd(context, routes), // You can override onSkip callback
         showSkipButton: true,
         skipOrBackFlex: 0,
         nextFlex: 0,

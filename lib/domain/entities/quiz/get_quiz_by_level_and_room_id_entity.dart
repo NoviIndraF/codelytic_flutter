@@ -84,7 +84,7 @@ class QuizEntity extends Equatable{
   String? title;
   String? description;
   int? level;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
   List<Question>? question;
